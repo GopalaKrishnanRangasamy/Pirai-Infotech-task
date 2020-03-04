@@ -1,0 +1,199 @@
+#include<stdio.h>
+#include<string.h>
+struct software
+{
+	char name[50];
+	char author[50];
+	float version;
+	int year,price;
+};
+void author_app_details(struct software s[],int n);
+void sorting_price(struct software s[],int n);
+void year_and_publisher(struct software s[],int n);
+void sort_fields(struct software s[],int n);
+int main()
+{
+    int n,i,a,ch;
+    struct software s[10];
+    printf("Enter the number of software applications: ");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        printf("Enter the application name: ");
+        scanf("%s",s[i].name);
+        printf("Enter the author name: ");
+        scanf("%s",s[i].author);
+        printf("Enter the version: ");
+        scanf("%f",&s[i].version);
+        printf("Enter the published year: ");
+        scanf("%d",&s[i].year);
+        printf("Enter the price: ");
+        scanf("%d",&s[i].price);
+    }
+    do
+    {
+        printf("1.Application details\n2.Sorted details\n3.Year & publisher\n4.Two field sort  ");
+        scanf("%d",&a);
+        switch(a)
+        {
+            case 1:
+            author_app_details(s,n);
+            break;
+            case 2:
+            sorting_price(s,n);
+            break;
+            case 3:
+            year_and_publisher(s,n);
+            break;
+            case 4:
+            sort_fields(s,n);
+            break;
+        }
+    printf("\n1.Continue  0.Exit   ");
+    scanf("%d",&ch);
+    }while(ch!=0);
+    return 0;
+}
+void author_app_details(struct software s[],int n)
+{
+    char au[50];
+    int b=n;
+    printf("Enter the author name: ");
+    scanf("%s",au);
+    for(int i=0;i<n;i++)
+    {
+        if(strcmp(s[i].author,au)==0)
+        {
+            printf("\nApplication name: %s",s[i].name);
+            printf("\nVersion: %f",s[i].version);
+            printf("\nYear: %d",s[i].year);
+            printf("\nprice: %d",s[i].price);
+            b++;
+        }
+    }
+    if(b==n)
+    {
+        printf("\nData not available");
+    }
+}
+void sorting_price(struct software s[],int n)
+{
+    int ar[10],temp;
+    for(int i=0;i<n;i++)
+    {
+        ar[i]=s[i].price;
+    }
+    for(int i=0;i<n-1;i++)
+    {
+        for(int j=0;j<n-1-i;j++)
+        {
+            if(ar[j]>ar[j+1])
+            {
+                temp=ar[j];
+                ar[j]=ar[j+1];
+                ar[j+1]=temp;
+            }
+        }
+    }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            if(s[j].price==ar[i])
+            {
+                printf("\nApplication name: %s",s[j].name);
+                printf("\nAuthor Name: %s",s[j].author);
+                printf("\nVersion: %f",s[j].version);
+                printf("\nYear: %d",s[j].year);
+                printf("\nprice: %d",s[j].price);
+                break;
+            }
+        }
+    }
+}
+void year_and_publisher(struct software s[],int n)
+{
+    char aut[50];
+    int y,b=n;
+    printf("Enter the publisher: ");
+    scanf("%s",aut);
+    printf("Enter the year: ");
+    scanf("%d",&y);
+    for(int i=0;i<n;i++)
+    {
+        if((strcmp(s[i].author,aut)==0) && y==s[i].year)
+        {
+            printf("Application Name: %s",s[i].name);
+            b++;
+        }
+    }
+    if(b==n)
+    {
+        printf("\nData not available");
+    }
+}
+void sort_fields(struct software s[],int n)
+{
+    char temp[50];
+    int t,t1;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+         
+            if(strcmp(s[i].author,s[j].author)>0)
+            {
+                strcpy(temp,s[i].author);
+                strcpy(s[i].author,s[j].author);
+                strcpy(s[j].author,temp);
+                strcpy(temp,s[i].name);
+                strcpy(s[i].name,s[j].name);
+                strcpy(s[j].name,temp);
+                t1=s[i].version;
+                s[i].version=s[j].version;
+                s[j].version=t1;
+                t1=s[i].year;
+                s[i].year=s[j].year;
+                s[j].year=t1;
+                t1=s[i].price;
+                s[i].price=s[j].price;
+                s[j].price=t1;
+            }
+        }
+    }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+           if(strcmp(s[i].author,s[j].author)==0)
+           {
+            if(s[i].year>s[j].year)
+            {
+                t=s[i].year;
+                s[i].year=s[j].year;
+                s[j].year=t;
+                strcpy(temp,s[i].author);
+                strcpy(s[i].author,s[j].author);
+                strcpy(s[j].author,temp);
+                strcpy(temp,s[i].name);
+                strcpy(s[i].name,s[j].name);
+                strcpy(s[j].name,temp);
+                t=s[i].version;
+                s[i].version=s[j].version;
+                s[j].version=t;
+                t=s[i].price;
+                s[i].price=s[j].price;
+                s[j].price=t;
+            }
+           }
+        }
+    }
+    for(int i=0;i<n;i++)
+    {
+        printf("\nApplication name: %s",s[i].name);
+        printf("\nAuthor Name: %s",s[i].author);
+        printf("\nVersion: %f",s[i].version);
+        printf("\nYear: %d",s[i].year);
+        printf("\nprice: %d",s[i].price);
+    }
+}
